@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("docente")
+  createdAt DateTime @default(now())
+  Curriculum Curriculum[]
+  Planner   Planner[]
+  Lesson    Lesson[]
+}
+
+model Curriculum {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  nivel      String
+  grado      String
+  asignatura String
+  edades     String
+  periodos   Int
+  contenido  Json
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Planner {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  curriculumId Int
+  parametros   Json
+  contenido    Json
+  createdAt    DateTime @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id])
+}
+
+model Lesson {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  tema       String
+  parametros Json
+  contenido  Json
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+}

@@ -1,0 +1,609 @@
+import { useState } from "react";
+import { api } from "../lib/api";
+import { useAuthStore } from "../store/auth";
+import "../styles.css";
+
+export default function PlaneadorForm() {
+  const user = useAuthStore((s) => s.user);
+  const [form, setForm] = useState({
+    asignatura: "Matemáticas",
+    grado: "3°",
+    tipoPlanificacion: "periodo", // "periodo" o "semanal"
+    periodo: "1",
+    semana: "",
+    temas: ""
+  });
+  const [preview, setPreview] = useState<any>(null);
+  const [status, setStatus] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const [showHistorial, setShowHistorial] = useState(false);
+  const [historial, setHistorial] = useState<any[]>([]);
+  const [loadingHistorial, setLoadingHistorial] = useState(false);
+
+  async function save() {
+    if (!preview) return;
+    setStatus("Guardando...");
+    setLoading(true);
+    try {
+      const { data } = await api.post("/planeadores", { 
+        userId: user?.id, 
+        ...form, 
+        contenido: preview 
+      });
+      setStatus(`✅ Planeador guardado con id ${data.id}`);
+      alert("✅ Planeador guardado correctamente");
+      if (showHistorial) {
+        fetchHistorial();
+      }
+    } catch {
+      setStatus("❌ Error al guardar planeador");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function generateWithAI() {
+    setStatus("⏳ Generando con IA...");
+    setLoading(true);
+    setPreview(null);
+    setShowHistorial(false);
+    
+    // Construir descripción según tipo de planificación
+    let descripcion = "";
+    if (form.tipoPlanificacion === "periodo") {
+      descripcion = `Periodo ${form.periodo} completo (10 semanas)`;
+    } else {
+      descripcion = `Semana ${form.semana} del Periodo ${form.periodo}`;
+    }
+    
+    try {
+      const { data } = await api.post("/planeadores/generar", {
+        ...form,
+        descripcion,
+        tema: form.temas
+      });
+      setPreview(data.contenido);
+      setStatus("✅ Planeador generado con IA");
+    } catch (e: any) {
+      setStatus(e?.response?.data?.error || "❌ Error al generar con IA");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deletePlaneador(id: number) {
+    if (!confirm("¿Seguro que deseas eliminar este planeador?")) return;
+    try {
+      await api.delete(`/planeadores/${id}`);
+      setHistorial((prev) => prev.filter((p) => p.id !== id));
+      alert("🗑️ Planeador eliminado correctamente");
+    } catch {
+      alert("❌ Error al eliminar el planeador");
+    }
+  }
+
+  function verPlaneador(planeador: any) {
+    setPreview(planeador.contenido);
+    setForm({
+      asignatura: planeador.asignatura,
+      grado: planeador.grado,
+      periodo: planeador.periodo || "1",
+      tipoPlanificacion: planeador.semana ? "semanal" : "periodo",
+      semana: planeador.semana || "",
+      temas: planeador.tema || ""
+    });
+    setShowHistorial(false);
+    setStatus(`📄 Visualizando planeador ID: ${planeador.id}`);
+  }
+
+  function exportPDF(content: any, asignatura: string, grado: string, periodo: string, id?: number) {
+    if (!content) return;
+    
+    const contenidoReal = content.contenido || content;
+    
+    // Construir contenido del PDF con formato de texto
+    let contenidoPDF = `PLANEADOR DE CLASE\n\n`;
+    contenidoPDF += `Asignatura: ${asignatura || contenidoReal.asignatura}\n`;
+    contenidoPDF += `Grado: ${grado || contenidoReal.grado}\n`;
+    contenidoPDF += `Periodo: ${periodo || contenidoReal.periodo}\n`;
+    if (contenidoReal.tema) {
+      contenidoPDF += `Tema: ${contenidoReal.tema}\n`;
+    }
+    contenidoPDF += `Duración: ${contenidoReal.duracion || "10 semanas"}\n\n`;
+    
+    if (contenidoReal.estandares) {
+      contenidoPDF += `ESTÁNDARES (MEN):\n`;
+      const est = Array.isArray(contenidoReal.estandares) ? contenidoReal.estandares : [contenidoReal.estandares];
+      est.forEach((e: string, i: number) => contenidoPDF += `${i + 1}. ${e}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.dba) {
+      contenidoPDF += `DERECHOS BÁSICOS DE APRENDIZAJE (DBA):\n`;
+      const dba = Array.isArray(contenidoReal.dba) ? contenidoReal.dba : [contenidoReal.dba];
+      dba.forEach((d: string, i: number) => contenidoPDF += `${i + 1}. ${d}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.objetivos) {
+      contenidoPDF += `OBJETIVOS:\n`;
+      contenidoReal.objetivos.forEach((o: string, i: number) => contenidoPDF += `${i + 1}. ${o}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.competencias) {
+      contenidoPDF += `COMPETENCIAS:\n`;
+      contenidoReal.competencias.forEach((c: string, i: number) => contenidoPDF += `${i + 1}. ${c}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.actividades) {
+      contenidoPDF += `ACTIVIDADES:\n\n`;
+      if (contenidoReal.actividades.inicio) {
+        contenidoPDF += `Inicio:\n`;
+        const inicio = Array.isArray(contenidoReal.actividades.inicio) ? contenidoReal.actividades.inicio : [contenidoReal.actividades.inicio];
+        inicio.forEach((a: string, i: number) => contenidoPDF += `  ${i + 1}. ${a}\n`);
+        contenidoPDF += `\n`;
+      }
+      if (contenidoReal.actividades.desarrollo) {
+        contenidoPDF += `Desarrollo:\n`;
+        const desarrollo = Array.isArray(contenidoReal.actividades.desarrollo) ? contenidoReal.actividades.desarrollo : [contenidoReal.actividades.desarrollo];
+        desarrollo.forEach((a: string, i: number) => contenidoPDF += `  ${i + 1}. ${a}\n`);
+        contenidoPDF += `\n`;
+      }
+      if (contenidoReal.actividades.cierre) {
+        contenidoPDF += `Cierre:\n`;
+        const cierre = Array.isArray(contenidoReal.actividades.cierre) ? contenidoReal.actividades.cierre : [contenidoReal.actividades.cierre];
+        cierre.forEach((a: string, i: number) => contenidoPDF += `  ${i + 1}. ${a}\n`);
+        contenidoPDF += `\n`;
+      }
+    }
+    
+    if (contenidoReal.estrategiasMetodologicas || contenidoReal.estrategias) {
+      contenidoPDF += `ESTRATEGIAS METODOLÓGICAS:\n`;
+      const estrategias = contenidoReal.estrategiasMetodologicas || contenidoReal.estrategias;
+      estrategias.forEach((e: string, i: number) => contenidoPDF += `${i + 1}. ${e}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.recursos) {
+      contenidoPDF += `RECURSOS:\n`;
+      contenidoReal.recursos.forEach((r: string, i: number) => contenidoPDF += `${i + 1}. ${r}\n`);
+      contenidoPDF += `\n`;
+    }
+    
+    if (contenidoReal.evaluacion) {
+      contenidoPDF += `EVALUACIÓN:\n`;
+      if (contenidoReal.evaluacion.criterios) {
+        contenidoPDF += `Criterios:\n`;
+        contenidoReal.evaluacion.criterios.forEach((c: string, i: number) => contenidoPDF += `  ${i + 1}. ${c}\n`);
+      }
+      if (contenidoReal.evaluacion.instrumentos) {
+        contenidoPDF += `Instrumentos:\n`;
+        contenidoReal.evaluacion.instrumentos.forEach((inst: string, i: number) => contenidoPDF += `  ${i + 1}. ${inst}\n`);
+      }
+    }
+    
+    const filename = id 
+      ? `planeador_${asignatura}_${grado}_P${periodo}_ID${id}.txt`
+      : `planeador_${asignatura}_${grado}_P${periodo}.txt`;
+    
+    const blob = new Blob([contenidoPDF], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function exportWord(content: any, asignatura: string, grado: string, periodo: string, id?: number) {
+    if (!content) return;
+    
+    const contenidoReal = content.contenido || content;
+    
+    // Crear contenido HTML para Word
+    let htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Planeador de Clase</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 40px; }
+          h1 { color: #0b2e59; text-align: center; }
+          h2 { color: #1f5aa6; margin-top: 20px; border-bottom: 2px solid #1f5aa6; }
+          h3 { color: #143e73; margin-top: 15px; }
+          .info { background-color: #f5f7fb; padding: 15px; margin-bottom: 20px; border-left: 4px solid #1f5aa6; }
+          ul { margin: 10px 0; }
+          li { margin: 5px 0; }
+          .section { margin-bottom: 20px; }
+        </style>
+      </head>
+      <body>
+        <h1>PLANEADOR DE CLASE</h1>
+        <div class="info">
+          <p><strong>Asignatura:</strong> ${asignatura || contenidoReal.asignatura}</p>
+          <p><strong>Grado:</strong> ${grado || contenidoReal.grado}</p>
+          <p><strong>Periodo:</strong> ${periodo || contenidoReal.periodo}</p>
+          ${contenidoReal.tema ? `<p><strong>Tema:</strong> ${contenidoReal.tema}</p>` : ""}
+          <p><strong>Duración:</strong> ${contenidoReal.duracion || "10 semanas"}</p>
+        </div>
+    `;
+    
+    if (contenidoReal.estandares) {
+      htmlContent += `<div class="section"><h2>ESTÁNDARES (MEN)</h2><ul>`;
+      const est = Array.isArray(contenidoReal.estandares) ? contenidoReal.estandares : [contenidoReal.estandares];
+      est.forEach((e: string) => htmlContent += `<li>${e}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.dba) {
+      htmlContent += `<div class="section"><h2>DERECHOS BÁSICOS DE APRENDIZAJE (DBA)</h2><ul>`;
+      const dba = Array.isArray(contenidoReal.dba) ? contenidoReal.dba : [contenidoReal.dba];
+      dba.forEach((d: string) => htmlContent += `<li>${d}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.objetivos) {
+      htmlContent += `<div class="section"><h2>OBJETIVOS</h2><ul>`;
+      contenidoReal.objetivos.forEach((o: string) => htmlContent += `<li>${o}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.competencias) {
+      htmlContent += `<div class="section"><h2>COMPETENCIAS</h2><ul>`;
+      contenidoReal.competencias.forEach((c: string) => htmlContent += `<li>${c}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.actividades) {
+      htmlContent += `<div class="section"><h2>ACTIVIDADES</h2>`;
+      if (contenidoReal.actividades.inicio) {
+        htmlContent += `<h3>Inicio</h3><ul>`;
+        const inicio = Array.isArray(contenidoReal.actividades.inicio) ? contenidoReal.actividades.inicio : [contenidoReal.actividades.inicio];
+        inicio.forEach((a: string) => htmlContent += `<li>${a}</li>`);
+        htmlContent += `</ul>`;
+      }
+      if (contenidoReal.actividades.desarrollo) {
+        htmlContent += `<h3>Desarrollo</h3><ul>`;
+        const desarrollo = Array.isArray(contenidoReal.actividades.desarrollo) ? contenidoReal.actividades.desarrollo : [contenidoReal.actividades.desarrollo];
+        desarrollo.forEach((a: string) => htmlContent += `<li>${a}</li>`);
+        htmlContent += `</ul>`;
+      }
+      if (contenidoReal.actividades.cierre) {
+        htmlContent += `<h3>Cierre</h3><ul>`;
+        const cierre = Array.isArray(contenidoReal.actividades.cierre) ? contenidoReal.actividades.cierre : [contenidoReal.actividades.cierre];
+        cierre.forEach((a: string) => htmlContent += `<li>${a}</li>`);
+        htmlContent += `</ul>`;
+      }
+      htmlContent += `</div>`;
+    }
+    
+    if (contenidoReal.estrategiasMetodologicas || contenidoReal.estrategias) {
+      htmlContent += `<div class="section"><h2>ESTRATEGIAS METODOLÓGICAS</h2><ul>`;
+      const estrategias = contenidoReal.estrategiasMetodologicas || contenidoReal.estrategias;
+      estrategias.forEach((e: string) => htmlContent += `<li>${e}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.recursos) {
+      htmlContent += `<div class="section"><h2>RECURSOS</h2><ul>`;
+      contenidoReal.recursos.forEach((r: string) => htmlContent += `<li>${r}</li>`);
+      htmlContent += `</ul></div>`;
+    }
+    
+    if (contenidoReal.evaluacion) {
+      htmlContent += `<div class="section"><h2>EVALUACIÓN</h2>`;
+      if (contenidoReal.evaluacion.criterios) {
+        htmlContent += `<h3>Criterios</h3><ul>`;
+        contenidoReal.evaluacion.criterios.forEach((c: string) => htmlContent += `<li>${c}</li>`);
+        htmlContent += `</ul>`;
+      }
+      if (contenidoReal.evaluacion.instrumentos) {
+        htmlContent += `<h3>Instrumentos</h3><ul>`;
+        contenidoReal.evaluacion.instrumentos.forEach((inst: string) => htmlContent += `<li>${inst}</li>`);
+        htmlContent += `</ul>`;
+      }
+      htmlContent += `</div>`;
+    }
+    
+    htmlContent += `</body></html>`;
+    
+    const filename = id 
+      ? `planeador_${asignatura}_${grado}_P${periodo}_ID${id}.doc`
+      : `planeador_${asignatura}_${grado}_P${periodo}.doc`;
+    
+    const blob = new Blob([htmlContent], { type: "application/msword" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function toggleHistorial() {
+    const nuevoEstado = !showHistorial;
+    setShowHistorial(nuevoEstado);
+    if (nuevoEstado) {
+      fetchHistorial();
+    }
+  }
+
+  async function fetchHistorial() {
+    setLoadingHistorial(true);
+    try {
+      const { data } = await api.get(`/planeadores/${user?.id}`);
+      console.log("Historial recibido:", data);
+      setHistorial(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error al cargar historial:", error);
+      setHistorial([]);
+    } finally {
+      setLoadingHistorial(false);
+    }
+  }
+
+  // Generar opciones de semanas (1-10)
+  const semanas = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  return (
+    <div className="space-y-3">
+      {/* Botón de historial - Siempre visible */}
+      <div className="flex justify-end mb-2">
+        <button 
+          onClick={toggleHistorial} 
+          className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-sm"
+        >
+          📂 {showHistorial ? "Cerrar historial" : "Historial de planeadores"}
+        </button>
+      </div>
+
+      {/* Formulario - Solo visible cuando NO hay preview ni historial */}
+      {!preview && !showHistorial && (
+        <>
+          <select
+            className="input w-full"
+            value={form.asignatura}
+            onChange={(e) => setForm({ ...form, asignatura: e.target.value })}
+          >
+            <option value="Matemáticas">Matemáticas</option>
+            <option value="Ciencias Naturales">Ciencias Naturales</option>
+            <option value="Lengua Castellana">Lengua Castellana</option>
+            <option value="Ciencias Sociales">Ciencias Sociales</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Educación Física">Educación Física</option>
+            <option value="Educación Artística">Educación Artística</option>
+            <option value="Tecnología e Informática">Tecnología e Informática</option>
+            <option value="Ética y Valores">Ética y Valores</option>
+          </select>
+
+          <input
+            className="input w-full"
+            value={form.grado}
+            onChange={(e) => setForm({ ...form, grado: e.target.value })}
+            placeholder="Grado (ej: 3°, Quinto)"
+          />
+
+          {/* Tipo de planificación */}
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Tipo de planificación:
+            </label>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="tipoPlanificacion"
+                  value="periodo"
+                  checked={form.tipoPlanificacion === "periodo"}
+                  onChange={(e) => setForm({ ...form, tipoPlanificacion: e.target.value, semana: "" })}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm">Por periodo completo</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="tipoPlanificacion"
+                  value="semanal"
+                  checked={form.tipoPlanificacion === "semanal"}
+                  onChange={(e) => setForm({ ...form, tipoPlanificacion: e.target.value })}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm">Semanal</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Selector de periodo */}
+          <select
+            className="input w-full"
+            value={form.periodo}
+            onChange={(e) => setForm({ ...form, periodo: e.target.value })}
+          >
+            <option value="1">Periodo 1</option>
+            <option value="2">Periodo 2</option>
+            <option value="3">Periodo 3</option>
+            <option value="4">Periodo 4</option>
+          </select>
+
+          {/* Selector de semana - Solo si es semanal */}
+          {form.tipoPlanificacion === "semanal" && (
+            <select
+              className="input w-full"
+              value={form.semana}
+              onChange={(e) => setForm({ ...form, semana: e.target.value })}
+            >
+              <option value="">Seleccionar semana...</option>
+              {semanas.map((s) => (
+                <option key={s} value={s}>
+                  Semana {s} del Periodo {form.periodo}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {/* Campo de temas */}
+          <textarea
+            className="input w-full"
+            value={form.temas}
+            onChange={(e) => setForm({ ...form, temas: e.target.value })}
+            placeholder="Tema(s) a planificar (ej: Operaciones con números naturales, Resolución de problemas)"
+            rows={3}
+          />
+
+          <button
+            className="btn w-full"
+            onClick={generateWithAI}
+            disabled={loading || (form.tipoPlanificacion === "semanal" && !form.semana)}
+          >
+            {loading ? "⏳ Generando..." : "✨ Generar con IA"}
+          </button>
+
+          {status && !preview && <p className="text-sm text-center">{status}</p>}
+        </>
+      )}
+
+      {/* Botones de acción - Solo visible cuando HAY preview */}
+      {preview && !showHistorial && (
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={save}
+              disabled={loading}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-green-600 text-white hover:bg-green-700 transition-all shadow-sm"
+            >
+              💾 Guardar planeador
+            </button>
+            <button
+              onClick={() => exportPDF(preview, form.asignatura, form.grado, form.periodo)}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+            >
+              📄 Descargar PDF
+            </button>
+            <button
+              onClick={() => exportWord(preview, form.asignatura, form.grado, form.periodo)}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+            >
+              📝 Descargar Word
+            </button>
+            <button
+              onClick={() => setPreview(null)}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm"
+            >
+              🔄 Nuevo planeador
+            </button>
+          </div>
+
+          {status && <p className="text-sm text-center">{status}</p>}
+        </div>
+      )}
+
+      {/* Panel de Historial */}
+      {showHistorial && (
+        <div className="w-full bg-white shadow rounded-lg p-6 mb-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-gray-800">📚 Historial de Planeadores</h3>
+            <button 
+              onClick={() => setShowHistorial(false)}
+              className="text-gray-500 hover:text-gray-700 text-xl font-bold px-3 py-1 hover:bg-gray-100 rounded"
+            >
+              ✕
+            </button>
+          </div>
+          
+          {loadingHistorial ? (
+            <div className="text-center py-8">
+              <p className="text-lg text-gray-600">⏳ Cargando historial...</p>
+            </div>
+          ) : historial.length === 0 ? (
+            <div className="text-center py-12 bg-gray-50 rounded-lg">
+              <p className="text-lg text-gray-600 mb-2">📭 No hay planeadores guardados</p>
+              <p className="text-sm text-gray-500">Crea tu primer planeador para verlo aquí</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {historial.map((planeador: any) => (
+                <HistorialCard
+                  key={planeador.id}
+                  item={planeador}
+                  onExportPDF={() => exportPDF(planeador, planeador.asignatura, planeador.grado, planeador.periodo, planeador.id)}
+                  onExportWord={() => exportWord(planeador, planeador.asignatura, planeador.grado, planeador.periodo, planeador.id)}
+                  onVerPlaneador={() => verPlaneador(planeador)}
+                  onDelete={() => deletePlaneador(planeador.id)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Vista previa del planeador */}
+      {preview && !showHistorial && (
+        <div className="mt-6 space-y-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="font-bold text-lg text-blue-900 mb-2">
+              {preview.asignatura} - {preview.grado}
+            </h4>
+            <p className="text-sm text-blue-700">
+              {form.tipoPlanificacion === "periodo" 
+                ? `Periodo ${preview.periodo || form.periodo} completo (10 semanas)`
+                : `Semana ${form.semana} del Periodo ${form.periodo}`
+              }
+            </p>
+            {preview.tema && (
+              <p className="text-sm text-blue-700 mt-1">
+                <strong>Tema:</strong> {preview.tema}
+              </p>
+            )}
+          </div>
+
+          <section className="rounded-lg border border-gray-200 p-4 bg-white">
+            <p className="font-semibold text-gray-800 mb-2">📋 Estándares (MEN)</p>
+            <BulletList items={preview.estandares} />
+          </section>
+
+          <section className="rounded-lg border border-gray-200 p-4 bg-white">
+            <p className="font-semibold text-gray-800 mb-2">🎯 Derechos Básicos de Aprendizaje (DBA)</p>
+            <BulletList items={preview.dba} />
+          </section>
+
+          <section className="rounded-lg border border-gray-200 p-4 bg-white">
+            <p className="font-semibold text-gray-800 mb-2">🎯 Objetivos</p>
+            <BulletList items={preview.objetivos} />
+          </section>
+
+          <section className="rounded-lg border border-gray-200 p-4 bg-white">
+            <p className="font-semibold text-gray-800 mb-2">💡 Competencias</p>
+            <BulletList items={preview.competencias} />
+          </section>
+
+          {preview.contenidos && (
+            <section className="rounded-lg border border-gray-200 p-4 bg-white">
+              <p className="font-semibold text-gray-800 mb-2">📚 Contenidos</p>
+              {Array.isArray(preview.contenidos) ? (
+                <div className="space-y-2">
+                  {preview.contenidos.map((cont: any, i: number) => (
+                    <div key={i} className="pl-3 border-l-2 border-blue-500">
+                      <p className="text-sm font-medium">Semana {cont.semana}: {cont.tema}</p>
+                      {cont.descripcion && <p className="text-xs text-gray-600">{cont.descripcion}</p>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <BulletList items={preview.contenidos} />
+              )}
+            </section>
+          )}
+
+          <section className="rounded-lg border border-gray-200 p-4 bg-white">
+            <p className="font-semibold text-gray-800 mb-3">🎭 Actividades</p>
+            <div className="grid md:grid-cols-3 gap-3">
+              <CardSub title="Inicio">
+                <BulletList items={preview.actividades?.inicio} />
+              </CardSub>
+              <CardSub title="Desarrollo">
+                <BulletList items={preview.activ

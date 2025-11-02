@@ -1,0 +1,145 @@
+🔎 Intentando generar con modelo: gemini-2.0-flash
+✅ Respuesta obtenida con modelo: gemini-2.0-flash
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: no such column: createdAt
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:30:6
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:421:3)
+SqliteError: table curriculum has no column named anio
+    at Database.prepare (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\better-sqlite3\lib\methods\wrappers.js:5:21)
+    at C:\Users\eduar contreras\eduplan-ia\backend\src\curriculum.ts:10:19
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\eduar contreras\eduplan-ia\backend\node_modules\express\lib\router\index.js:175:3)

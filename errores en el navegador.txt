@@ -1,0 +1,59 @@
+[plugin:vite:react-babel] C:\Users\eduar contreras\eduplan-ia\frontend\src\pages\CurriculumForm.tsx: Unexpected token, expected "}" (327:18)
+
+  325 |     return (
+  326 |       <ul className="space-y-2">
+> 327 |         {items.map
+      |                   ^
+C:/Users/eduar contreras/eduplan-ia/frontend/src/pages/CurriculumForm.tsx:327:18
+    at constructor (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:367:19)
+    at TypeScriptParserMixin.raise (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:6624:19)
+    at TypeScriptParserMixin.unexpected (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:6644:16)
+    at TypeScriptParserMixin.expect (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:6924:12)
+    at TypeScriptParserMixin.jsxParseExpressionContainer (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:4666:10)
+    at TypeScriptParserMixin.jsxParseElementAt (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:4740:36)
+    at TypeScriptParserMixin.jsxParseElement (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:4778:17)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:4788:19)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11145:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11130:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11110:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9890:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10963:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10968:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10945:23)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10895:21)
+    at C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9828:39
+    at TypeScriptParserMixin.tryParse (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:6932:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9828:18)
+    at C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10864:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12500:12)
+    at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10864:17)
+    at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12567:17)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11747:28)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11395:23)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:4793:20)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11145:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11130:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:11110:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9890:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10963:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10968:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10945:23)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10895:21)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9839:20)
+    at TypeScriptParserMixin.parseExpressionBase (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10848:23)
+    at C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10844:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12495:16)
+    at TypeScriptParserMixin.parseExpression (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:10844:17)
+    at TypeScriptParserMixin.parseReturnStatement (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:13218:28)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12874:21)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9569:18)
+    at TypeScriptParserMixin.parseStatementLike (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12843:17)
+    at TypeScriptParserMixin.parseStatementListItem (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12823:17)
+    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:13392:61)
+    at TypeScriptParserMixin.parseBlockBody (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:13385:10)
+    at TypeScriptParserMixin.parseBlock (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:13373:10)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12934:21)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:9569:18)
+    at TypeScriptParserMixin.parseStatementLike (C:\Users\eduar contreras\eduplan-ia\frontend\node_modules\@babel\parser\lib\index.js:12843:17)
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.
